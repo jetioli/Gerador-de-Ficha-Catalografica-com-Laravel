@@ -20,6 +20,8 @@ Route::get('/', function () {
 });
 Route::get("/formulario", [apresentacao::class, "create"]);
 Route::post("/recebeDados", [apresentacao::class, "store"])->name("recebeDados.store");
+Route::get("/cutter", [apresentacao::class, "index"])->name("cutter.index");
+
 // a rota abaixo chama a view "exibe":
 
 
