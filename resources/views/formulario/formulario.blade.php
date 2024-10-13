@@ -17,19 +17,22 @@
         @csrf 
           
         <div class="form-row">
-        <div class= "form-group col-md-3"> <label for="sobrenome">Sobrenome</label> <input type="text" class="form-control" id="sobrenome" name="sobrenome"></div>
-        <div class= "form-group col-md-7"> <label for="nome">Nome</label> <input type="text" class="form-control" id="nome" name="nome"></div>
+        <div class= "form-group col-md-3"> <label for="sobrenome">Sobrenome</label> <input type="text" class="form-control" id="sobrenome" name="sobrenome" placeholder="Exemplo: Assis"></div>
+        
+        <div class= "form-group col-md-7"> <label for="nome">Nome</label> <input type="text" class="form-control" id="nome" name="nome" placeholder="Exemplo: Joaquim Machado de"></div>
         <div class= "form-group col-md-12"> <label for="titulo">Título</label> <input type="text" class="form-control" id="titulo" name="titulo"></div>
         <div class= "form-group col-md-12"> <label for="subtitulo">Subtítulo</label> <input type="text" class="form-control" id="subtitulo" name="subtitulo"></div>  
         <div class= "form-group col-md-4"> <label for="pagina">Número de páginas</label> <input type="text" class="form-control" id="pagina" name="pagina"></div>  
         <div class= "form-group col-md-9"> <label for="local">Local</label> <input type="text" class="form-control" id="local" name="local"></div>       
         <div class= "form-group col-md-8"> <label for="ano">Ano</label> <input type="text" class="form-control" id="ano" name="ano"></div>            
        
-        <div class= "form-group col-md-6"> <label for="sobrenomeorientador">Sobrenome do orientador</label> <input type="text" class="form-control" id="sobrenomeorientador" name="sobrenomeorientador"></div>                
+        <div class= "form-group col-md-6"> <label for="sobrenomeorientador">Sobrenome do(a) orientador(a)</label> <input type="text" class="form-control" id="sobrenomeorientador" name="sobrenomeorientador" placeholder="Exemplo: Assis"></div>                
                             
-        <div class= "form-group col-md-6"> <label for="nomeorientador">Nome do orientador</label> <input type="text" class="form-control" id="nomeorientador" name="nomeorientador"></div>                       
-                                  
-         
+        <div class= "form-group col-md-6"> <label for="nomeorientador">Nome do(a) orientador(a)</label> <input type="text" class="form-control" id="nomeorientador" name="nomeorientador" placeholder="Exemplo: Joaquim Machado de"></div>                       
+        <div class= "form-group col-md-6"> <label for="cutter">Código Cutter</label> <input type="text" class="form-control" id="cutter" name="cutter" placeholder="Clique no link ao lado, gere o código e o cole aqui."></div>
+        <p>
+        <a href="/formularioCutter" target="_blank">Clique aqui para gerar e colar o código "Cutter"</a>
+        </p>
         <div class= "form-group col-md-6"> <label for="tipo">Tipo de publicação</label> <select name="tipo" class="form-control" id="tipo" name="tipo">
             <option value="Monografia">Monografia</option>
             <option value="Projeto de Intervecao">Projeto de Intervenção</option>

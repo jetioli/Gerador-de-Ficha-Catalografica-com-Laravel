@@ -111,6 +111,7 @@ class apresentacao extends Controller
         $pagina = $data["pagina"]; 
         $sobrenomeorientador = $data["sobrenomeorientador"]; 
         $nomeorientador = $data["nomeorientador"]; 
+       // $codigocutter = $data ["codigocutter"];
         $tipo = $data["tipo"]; 
         $titulacao = $data["titulacao"];
         $palavra1 = $data["palavra1"]; 
