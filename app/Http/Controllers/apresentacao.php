@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Models\Cutter;
 
 class apresentacao extends Controller
 {
@@ -12,7 +13,15 @@ class apresentacao extends Controller
      */
     public function index()
     {
-        //
+        
+       
+        
+        $cutter = Cutter::get();
+
+        dd($cutter);
+       
+
+
     }
 
     /**
@@ -22,6 +31,63 @@ class apresentacao extends Controller
     {
         //
         return view("formulario.formulario");
+    }
+
+
+    public function createcutter()
+    {
+        //
+        return view("formulario.formularioCutter");
+
+
+
+        
+    }
+
+
+    public function storecutter(Request $request)
+    {
+      
+       
+
+    // Obter o sobrenome do request
+    $sobrenome = $request->input('sobrenome');
+
+    // Criar um array para armazenar os resultados
+    $resultados = [];
+
+    // Loop para verificar diferentes substrings do sobrenome
+    for ($i = 1; $i <= 15; $i++) {
+        $substring = substr($sobrenome, 0, -$i); // Cria substring com o tamanho reduzido
+
+        // Consulta usando Eloquent
+        $cutter = Cutter::select('letras', 'numeros')
+            ->where('letras', 'like', $substring)
+            ->get();
+
+        // Armazena os resultados no array
+        foreach ($cutter as $row) {
+            $resultados[$i][] = $row->numeros; // Adiciona os números ao array de resultados
+        }
+    }
+
+    // Flatten the results and get the maximum value
+    $CSfinal3 = array_merge(...$resultados); // Combina todos os arrays de resultados em um único
+    $maior = max($CSfinal3); // Encontra o maior valor
+
+    // Obter a primeira letra de $sobrenome
+    $primeiraLetra = substr($sobrenome, 0, 1);
+
+    // Concatenar a primeira letra com o maior valor
+    $resultadoFinal = $primeiraLetra . $maior;
+
+    // Exibir o resultado final
+    print_r($resultadoFinal); // Imprime algo como "S123", se a primeira letra for "S" e o maior valor for 123
+
+
+        
+        
+
     }
 
     /**
@@ -45,6 +111,7 @@ class apresentacao extends Controller
         $pagina = $data["pagina"]; 
         $sobrenomeorientador = $data["sobrenomeorientador"]; 
         $nomeorientador = $data["nomeorientador"]; 
+        $cutter = $data ["cutter"];
         $tipo = $data["tipo"]; 
         $titulacao = $data["titulacao"];
         $palavra1 = $data["palavra1"]; 
@@ -62,32 +129,32 @@ class apresentacao extends Controller
 
             if (($palavra1 != NULL) and ($palavra2 != NULL) and ($palavra3 != NULL) and ($palavra4 != NULL)and ($palavra5 != NULL)) {
                 $um = ' 1. '. $palavra1.'.';
-                $dois = ' 2. '. $palavra2.'.';
-                $tres = ' 3. ' . $palavra3.'.';
-                $quatro = ' 4. '. $palavra4.'.';
-                $cinco = ' 5. '. $palavra5.'.';
+                $dois = ' .2. '. $palavra2.'.';
+                $tres = ' .3. ' . $palavra3.'.';
+                $quatro = ' .4. '. $palavra4.'.';
+                $cinco = ' .5. '. $palavra5.'.';
                 return $um .$dois .$tres .$quatro .$cinco;
           
             }
         
         elseif (($palavra1 != NULL) and ($palavra2 != NULL) and ($palavra3 != NULL) and ($palavra4 != NULL)) {
             $um = ' 1. '. $palavra1;
-            $dois = ' 2. '. $palavra2;
-            $tres = ' 3. ' . $palavra3;
-            $quatro = ' 4. '. $palavra4;
+            $dois = ' .2. '. $palavra2;
+            $tres = ' .3. ' . $palavra3;
+            $quatro = ' .4. '. $palavra4;
             return $um. $dois. $tres. $quatro;
           }
         
         elseif (($palavra1 != NULL) and ($palavra2 != NULL) and ($palavra3 != NULL)) {
             $um = ' 1. '. $palavra1;
-            $dois = ' 2. '. $palavra2;
-            $tres = ' 3. ' . $palavra3;
+            $dois = ' .2. '. $palavra2;
+            $tres = ' .3. ' . $palavra3;
             return $um. $dois. $tres;
           }
         
         elseif (($palavra1 != NULL) and ($palavra2 != NULL)) {
             $um = ' 1. '. $palavra1;
-            $dois = ' 2. '. $palavra2;
+            $dois = ' .2. '. $palavra2;
             
             return $um. $dois;
         
@@ -112,13 +179,13 @@ class apresentacao extends Controller
       
        // Foi criada a variável $texto para receber os dados.
 
-        $texto = "$sobrenome, $nome. <br/> 
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$titulo. /$nome $sobrenome. - Belo Horizonte: ESP-MG, $ano.<br/>
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$pagina f. <br/>
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Orientador(a):$nomeorientador $sobrenomeorientador.<br/>
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$tipo (Especialização) em $titulacao.<br/>
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Inclui bibliografia.<br/>
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $palavras. I. $sobrenomeorientador, $nomeorientador. II. Escola de Saúde Pública do Estado de Minas Gerais. III. Título";
+        $texto = "$cutter  $sobrenome, $nome. <br/> 
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$titulo. /$nome $sobrenome. - Belo Horizonte: ESP-MG, $ano.<br/>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$pagina f. <br/>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Orientador(a):$nomeorientador $sobrenomeorientador.<br/>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$tipo (Especialização) em $titulacao.<br/>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Inclui bibliografia.<br/>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $palavras. I. $sobrenomeorientador, $nomeorientador. II. Escola de Saúde Pública do Estado de Minas Gerais. III. Título";
 
 
 
@@ -142,7 +209,8 @@ class apresentacao extends Controller
 
        $pdf = PDF::loadHTML($tabela);
        return $pdf->stream('tabela.pdf');
-
+       return redirect()->route('cutter.index'); // sugestão do chattgpt para enviar para rota index.
+      
 
     }
 
