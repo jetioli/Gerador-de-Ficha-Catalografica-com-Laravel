@@ -111,8 +111,12 @@ class apresentacao extends Controller
            return $um;
        }
    }
+////////////////////////////// Início função Store
+  
 
-   public function store(Request $request)
+    ////////////////////////////////////// Final função store
+
+    public function store(Request $request)
 {
     // Obtendo os dados do formulário
     $data = $request->all();
@@ -135,6 +139,16 @@ class apresentacao extends Controller
     $palavra3 = $data["palavra3"];
     $palavra4 = $data["palavra4"];
     $palavra5 = $data["palavra5"];
+
+    // Processar o título removendo stopwords e gerar cutterTitulo
+    $vetitulo = explode(" ", trim($titulo));
+    $stopwords = array("o", "a", "os", "as", "um", "uns", "uma", "umas", "de", "do", "da", "dos", "das", "no", "na", "nos", "nas", "ao", "aos", "à", "às", "pelo", "pela", "pelos", "pelas", "duma", "dumas", "dum", "duns", "num", "numa", "nuns", "numas", "com", "por", "em");
+
+    if (isset($vetitulo[1]) && in_array(strtolower($vetitulo[0]), $stopwords)) {
+        $cutterTitulo = strtolower(substr($vetitulo[1], 0, 1));
+    } else {
+        $cutterTitulo = strtolower(substr($vetitulo[0], 0, 1));
+    }
 
     // Chamar o método Palavras dentro do store
     $palavras = $this->Palavras($palavra1, $palavra2, $palavra3, $palavra4, $palavra5);
@@ -166,7 +180,7 @@ class apresentacao extends Controller
     $primeiraLetra = substr($sobrenome, 0, 1);
 
     // Concatenar a primeira letra com o maior valor
-    $resultadoFinal = $primeiraLetra . $maior;
+    $resultadoFinal = $primeiraLetra . $maior . $cutterTitulo;
 
     // Criando o texto para o PDF
     $texto = "$resultadoFinal  $sobrenome, $nome. <br/> 
@@ -178,24 +192,17 @@ class apresentacao extends Controller
     <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $palavras. I. $sobrenomeorientador, $nomeorientador. II. Escola de Saúde Pública do Estado de Minas Gerais. III. Título";
 
     // Gerar tabela HTML para o PDF
-     // Aqui foi criada a tabela
-
-       //$tabela = '<table border="1">';//abre table
-       
-      // $tabela = '<table border="1" style="width: 100%; height: 100vh; align-items: flex-end; justify-content: center; ">'; // display: flex; justify-content: center; align-items: flex-end;">';
-      $tabela = '<table border="1" style="width: 80%; height: 80vh; align-items: end; justify-content: center; ">';
-      $tabela .='<tbody>' ; //abre corpo da tabela
-      $tabela .= '<td>' . $texto . '</td>';
-      $tabela .='</tbody>'; //fecha corpo
-      $tabela .= '</table>';//fecha tabela
-
+    $tabela = '<table border="1" style="width: 80%; height: 80vh; align-items: end; justify-content: center; ">';
+    $tabela .= '<tbody>';
+    $tabela .= '<td>' . $texto . '</td>';
+    $tabela .= '</tbody>';
+    $tabela .= '</table>';
 
     // Gerar PDF
     $pdf = PDF::loadHTML($tabela);
     return $pdf->stream('tabela.pdf');
 }
 
-    
 
     ////////////////////////////////////// FINAL /////////////////////////////////////////////
 
