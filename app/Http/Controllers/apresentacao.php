@@ -63,25 +63,25 @@ class apresentacao extends Controller
     {
         if (($palavra1 != NULL) && ($palavra2 != NULL) && ($palavra3 != NULL) && ($palavra4 != NULL) && ($palavra5 != NULL)) {
             $um = ' 1. '. $palavra1;
-            $dois = ' .2. '. $palavra2 ;
-            $tres = ' .3. '. $palavra3 ;
-            $quatro = ' .4. '. $palavra4;
-            $cinco = ' .5. '. $palavra5;
+            $dois = '. 2. '. $palavra2 ;
+            $tres = '. 3. '. $palavra3 ;
+            $quatro = '. 4. '. $palavra4;
+            $cinco = '. 5. '. $palavra5;
             return $um .$dois .$tres .$quatro .$cinco;
         } elseif (($palavra1 != NULL) && ($palavra2 != NULL) && ($palavra3 != NULL) && ($palavra4 != NULL)) {
             $um = ' 1. '. $palavra1;
-            $dois = ' .2. '. $palavra2;
-            $tres = ' .3. ' . $palavra3;
-            $quatro = ' .4. '. $palavra4;
+            $dois = '. 2. '. $palavra2;
+            $tres = '. 3. ' . $palavra3;
+            $quatro = '. 4. '. $palavra4;
             return $um. $dois. $tres. $quatro;
         } elseif (($palavra1 != NULL) && ($palavra2 != NULL) && ($palavra3 != NULL)) {
             $um = ' 1. '. $palavra1;
-            $dois = ' .2. '. $palavra2;
-            $tres = ' .3. ' . $palavra3;
+            $dois = '. 2. '. $palavra2;
+            $tres = '. 3 . ' . $palavra3;
             return $um. $dois. $tres;
         } elseif (($palavra1 != NULL) && ($palavra2 != NULL)) {
             $um = ' 1. '. $palavra1;
-            $dois = ' .2. '. $palavra2;
+            $dois = '. 2. '. $palavra2;
             return $um. $dois;
         } elseif ($palavra1 != NULL) {
             $um = ' 1. '. $palavra1;
@@ -93,15 +93,22 @@ class apresentacao extends Controller
     public function gerarRemissiva($palavras, $sobrenomeorientador, $nomeorientador, $titulo, $nome2 = null, $sobrenome2 = null)
     {
         if (empty($nome2) || empty($sobrenome2)) {
-            return $palavras . " .I. " . $sobrenomeorientador . ", " . $nomeorientador . ". II. Escola de Saúde Pública do Estado de Minas Gerais. III. " . "Título";
+            return $palavras . ".  I. " . $sobrenomeorientador . ", " . $nomeorientador . ". II. Escola de Saúde Pública do Estado de Minas Gerais. III. " . "Título";
         } else {
-            return $palavras . " .I. " . $sobrenome2 . ", " . $nome2 . ". II. " . $sobrenomeorientador . ", " . $nomeorientador . ". III. Escola de Saúde Pública do Estado de Minas Gerais. IV. " . "Título";
+            return $palavras . ". I. " . $sobrenome2 . ", " . $nome2 . ". II. " . $sobrenomeorientador . ", " . $nomeorientador . ". III. Escola de Saúde Pública do Estado de Minas Gerais. IV. " . "Título";
         }
     }
 
     // Função store
     public function store(Request $request)
     {
+        
+        $request->validate([
+            'sobrenome' => 'required',
+        ], [
+            'sobrenome.required' => 'Por favor, preencha o campo sobrenome.'
+        ]);
+        
         // Obtendo os dados do formulário
         $data = $request->all();
 
@@ -166,14 +173,16 @@ class apresentacao extends Controller
         $primeiraLetra = substr($sobrenome, 0, 1);
         $resultadoFinal = $primeiraLetra . $maior . $cutterTitulo;
 
+        
+
         // Criando o texto para o PDF
-        $texto = "$resultadoFinal  $sobrenome, $nome. <br/> 
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$titulo. /$nome $sobrenome. - Belo Horizonte: ESP-MG, $ano.<br/>
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$pagina f. <br/>
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Orientador(a):$nomeorientador $sobrenomeorientador.<br/>
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$tipo (Especialização) em $titulacao.<br/>
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Inclui bibliografia.<br/>
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$remissivas.";
+        $texto = "$resultadoFinal&nbsp;&nbsp;&nbsp;&nbsp;$sobrenome, $nome. <br/> 
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$titulo. /$nome $sobrenome. - Belo Horizonte: ESP-MG, $ano.<br/>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$pagina f. <br/>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Orientador(a):&nbsp;$nomeorientador $sobrenomeorientador.<br/>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$tipo (Especialização) em $titulacao.<br/>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Inclui bibliografia.<br/>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$remissivas.";
 
         // Gerar tabela HTML para o PDF
        
@@ -204,7 +213,12 @@ class apresentacao extends Controller
                         white-space: normal; 
                         word-wrap: break-word;
                         
-                    ">' . $texto . '</td>
+                    ">
+                    <div style="
+                            padding-left: 55px;  /* <-- Ajuste aqui o alinhamento */
+                            text-indent: -70px;  /* <-- Garante que quebras fiquem alinhadas */
+                            text-align: justify;
+                        "> ' . $texto . '</td>
                 </tr>
             </tbody>
         </table>

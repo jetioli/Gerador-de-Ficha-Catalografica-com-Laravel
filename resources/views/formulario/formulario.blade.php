@@ -49,10 +49,17 @@
         @csrf 
 
         <div class="row">
-            <div class="form-group col-md-4">
-                <label for="sobrenome">Sobrenome</label>
-                <input type="text" class="form-control" id="sobrenome" name="sobrenome" placeholder="Exemplo: Assis">
-            </div>
+        <div class="form-group col-md-3">
+    <label for="sobrenome">Sobrenome</label>
+    <input type="text" class="form-control @error('sobrenome') is-invalid @enderror" 
+           id="sobrenome" name="sobrenome" placeholder="Exemplo: Assis" required>
+
+    @error('sobrenome')
+        <div class="invalid-feedback">
+            {{ $message }}
+        </div>
+    @enderror
+</div>
 
             <div class="form-group col-md-8">
                 <label for="nome">Nome</label>
@@ -60,7 +67,7 @@
             </div>
 
             <div class="form-group col-md-12">
-                <button type="button" id="toggleButton" class="btn btn-outline-secondary w-100" onclick="toggleFields()">Adicionar outro autor</button>
+                <button type="button" id="toggleButton" class="btn btn-outline-secondary w-100" onclick="toggleFields()">Adicionar outro autor (trabalho em dupla). </button>
             </div>
 
             <div class="form-group col-md-4" id="sobrenome2Field" style="display:none;">
@@ -100,12 +107,12 @@
 
             <div class="form-group col-md-6">
                 <label for="sobrenomeorientador">Sobrenome do(a) orientador(a)</label>
-                <input type="text" class="form-control" id="sobrenomeorientador" name="sobrenomeorientador">
+                <input type="text" class="form-control" id="sobrenomeorientador" name="sobrenomeorientador"placeholder="Exemplo: Assis">
             </div>
 
             <div class="form-group col-md-6">
                 <label for="nomeorientador">Nome do(a) orientador(a)</label>
-                <input type="text" class="form-control" id="nomeorientador" name="nomeorientador">
+                <input type="text" class="form-control" id="nomeorientador" name="nomeorientador" placeholder="Exemplo: Joaquim Machado de">
             </div>
 
             <div class="form-group col-md-6">
@@ -124,7 +131,13 @@
                 <select class="form-control" id="titulacao" name="titulacao">
                     <option value="Saúde Pública">Saúde Pública</option>
                     <option value="Direito Sanitário">Direito Sanitário</option>
-                    <option value="Saúde Mental">Saúde Mental</option>
+                    <option value="Saúde Mental">Políticas de Saúde Mental e Atenção Psicossocial</option>
+                    <option value="Saúde Mental">Gestão do SUS</option>
+                    <option value="Saúde Mental">Vigilância em Saúde</option>
+                    <option value="Saúde Mental">Comunicação em Saúde</option>
+                    <option value="Saúde Mental">Atenção a Usuários de Drogas no SUS</option>
+                    <option value="Saúde Mental">Gestão do Trabalho e Educação em Saúde</option>
+                    <option value="Saúde Mental">Gestão Hospitalar</option>
                 </select>
             </div>
 
