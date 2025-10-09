@@ -43,7 +43,7 @@
 <body>
 
 <div class="container mt-4">
-    <h2 class="text-center mb-4">Formulário de Ficha Catalográfica</h2>
+    <h2 class="text-center mb-4">Gerador Automático de Ficha Catalográfica da ESP-MG</h2>
     
     <form action="{{ route('recebeDados.store') }}" method="POST">
         @csrf 
@@ -67,7 +67,7 @@
             </div>
 
             <div class="form-group col-md-12">
-                <button type="button" id="toggleButton" class="btn btn-outline-secondary w-100" onclick="toggleFields()">Adicionar outro autor (trabalho em dupla). </button>
+                <button type="button" id="toggleButton" class="btn btn-outline-secondary w-100" onclick="toggleFields()">Adicionar outro autor (em caso de trabalho em dupla). </button>
             </div>
 
             <div class="form-group col-md-4" id="sobrenome2Field" style="display:none;">
@@ -82,12 +82,12 @@
 
             <div class="form-group col-md-12">
                 <label for="titulo">Título</label>
-                <input type="text" class="form-control" id="titulo" name="titulo">
+                <input type="text" class="form-control" id="titulo" name="titulo"placeholder="Exemplo: Epidemiologia e saúde">
             </div>
 
             <div class="form-group col-md-12">
                 <label for="subtitulo">Subtítulo</label>
-                <input type="text" class="form-control" id="subtitulo" name="subtitulo">
+                <input type="text" class="form-control" id="subtitulo" name="subtitulo"placeholder="Exemplo: fundamentos, métodos e aplicações">
             </div>
 
             <div class="form-group col-md-3">
@@ -122,7 +122,7 @@
                     <option value="Projeto de Intervenção">Projeto de Intervenção</option>
                     <option value="Artigo Científico">Artigo Científico</option>
                     <option value="Guia Curricular">Guia Curricular</option>
-                    <option value="outro">Outro</option>
+                    <option value="Relato de Experiência">Relato de Experiência</option>
                 </select>
             </div>
 
@@ -130,14 +130,15 @@
                 <label for="titulacao">Curso</label>
                 <select class="form-control" id="titulacao" name="titulacao">
                     <option value="Saúde Pública">Saúde Pública</option>
+                    <option value="Saúde Pública - Saúde no Sistema Prisional">Saúde Pública - Saúde no Sistema Prisional</option>
                     <option value="Direito Sanitário">Direito Sanitário</option>
-                    <option value="Saúde Mental">Políticas de Saúde Mental e Atenção Psicossocial</option>
-                    <option value="Saúde Mental">Gestão do SUS</option>
-                    <option value="Saúde Mental">Vigilância em Saúde</option>
-                    <option value="Saúde Mental">Comunicação em Saúde</option>
-                    <option value="Saúde Mental">Atenção a Usuários de Drogas no SUS</option>
-                    <option value="Saúde Mental">Gestão do Trabalho e Educação em Saúde</option>
-                    <option value="Saúde Mental">Gestão Hospitalar</option>
+                    <option value="Políticas de Saúde Mental e Atenção Psicossocial">Políticas de Saúde Mental e Atenção Psicossocial</option>
+                    <option value="Gestão do SUS">Gestão do SUS</option>
+                    <option value="Vigilância em Saúde">Vigilância em Saúde</option>
+                    <option value="Comunicação em Saúde">Comunicação em Saúde</option>
+                    <option value="Atenção a Usuários de Drogas no SUS">Atenção a Usuários de Drogas no SUS</option>
+                    <option value="Gestão do Trabalho e Educação em Saúde">Gestão do Trabalho e Educação em Saúde</option>
+                    <option value="Gestão Hospitalar">Gestão Hospitalar</option>
                 </select>
             </div>
 

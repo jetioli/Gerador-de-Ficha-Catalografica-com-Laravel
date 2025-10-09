@@ -89,6 +89,58 @@ class apresentacao extends Controller
         }
     }
 
+
+    // Método que gera a NLM
+
+
+    private function GeraNLM($titulacao) {
+        
+    switch ($titulacao) {
+        case 'Saúde Pública':
+            $NLM = "WA 100";
+            break;
+
+        case 'Saúde Pública - Saúde no Sistema Prisional':
+            $NLM = "WA 300";
+            break;
+
+        case 'Direito Sanitário':
+            $NLM = "WA 32";
+            break;
+
+        case 'Políticas de Saúde Mental e Atenção Psicossocial':
+            $NLM = "WM 100";
+            break;
+
+        case 'Gestão do SUS':
+            $NLM = "WA 525";
+            break;
+
+        case 'Vigilância em Saúde':
+            $NLM = "WA 900";
+            break;
+
+        case 'Comunicação em Saúde':
+            $NLM = "WA 590";
+            break;
+
+        case 'Atenção a Usuários de Drogas no SUS':
+            $NLM = "WM 100";
+            break;
+
+        case 'Gestão Hospitalar':
+            $NLM = "WX 150";
+            break;
+
+        default:
+            $NLM = "WA 100";
+            break;
+    }
+
+    return $NLM;
+}
+
+
     // Definindo o método para gerar as remissivas
     public function gerarRemissiva($palavras, $sobrenomeorientador, $nomeorientador, $titulo, $nome2 = null, $sobrenome2 = null)
     {
@@ -101,8 +153,11 @@ class apresentacao extends Controller
 
     // Função store
     public function store(Request $request)
+
+   
+   
     {
-        
+       
         $request->validate([
             'sobrenome' => 'required',
         ], [
@@ -115,10 +170,11 @@ class apresentacao extends Controller
         // Atribuindo os dados a variáveis
         $sobrenome = $data["sobrenome"];
         $nome = $data["nome"];
-        $nome2 = $data["nome2"]; // caso o trabalho possua mais de um autor
+        $nome2 = !empty($data["nome2"]) ? '; ' . $data["nome2"] : ''; // caso o trabalho possua mais de um autor
         $sobrenome2 = $data["sobrenome2"]; // caso o trabalho possua mais de um autor
+        $nome3 = $data["nome2"]; // que irá aparecer caso tenha mais de um autor na impressão da ficha sem o ";"
         $titulo = $data["titulo"];
-        $subtitulo = $data["subtitulo"];
+        $subtitulo = ': ' . $data["subtitulo"];
         $local = $data["local"];
         $ano = $data["ano"];
         $pagina = $data["pagina"];
@@ -147,7 +203,7 @@ class apresentacao extends Controller
         $palavras = $this->Palavras($palavra1, $palavra2, $palavra3, $palavra4, $palavra5);
 
         // Chamando a função para gerar remissivas
-        $remissivas = $this->gerarRemissiva($palavras, $sobrenomeorientador, $nomeorientador, $titulo, $nome2, $sobrenome2);
+        $remissivas = $this->gerarRemissiva($palavras, $sobrenomeorientador, $nomeorientador, $titulo, $nome3, $sobrenome2);
 
        
 
@@ -173,17 +229,25 @@ class apresentacao extends Controller
         $primeiraLetra = substr($sobrenome, 0, 1);
         $resultadoFinal = $primeiraLetra . $maior . $cutterTitulo;
 
-        
+       // Chama o método que gera a NLM 
+       // Obtém o NLM com base na titulação
+        $NLM = $this->GeraNLM($titulacao);
+
 
         // Criando o texto para o PDF
-        $texto = "$resultadoFinal&nbsp;&nbsp;&nbsp;&nbsp;$sobrenome, $nome. <br/> 
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$titulo. /$nome $sobrenome. - Belo Horizonte: ESP-MG, $ano.<br/>
+        $texto = "$resultadoFinal&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$sobrenome, $nome. <br/> 
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$titulo $subtitulo. /$nome $sobrenome$nome2 $sobrenome2. - Belo Horizonte: ESP-MG, $ano.<br/>
         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$pagina f. <br/>
         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Orientador(a):&nbsp;$nomeorientador $sobrenomeorientador.<br/>
         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$tipo (Especialização) em $titulacao.<br/>
         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Inclui bibliografia.<br/>
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$remissivas.";
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$remissivas.
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NLM&nbsp;$NLM";
 
+        
         // Gerar tabela HTML para o PDF
        
       
@@ -222,12 +286,24 @@ class apresentacao extends Controller
                 </tr>
             </tbody>
         </table>
-    </div>';
+
+
+
+
+
+
+
+
+
+<!-- 🔻 Rodapé fixo -->
+<div class="rodape" style="text-align: center;">
+    Ficha gerada automaticamente com os dados fornecidos pelo(a) autor(a).
+</div>';
 
      
+
+
  
-
-
         // Gerar PDF
         $pdf = PDF::loadHTML($tabela);
         return $pdf->stream('tabela.pdf');
