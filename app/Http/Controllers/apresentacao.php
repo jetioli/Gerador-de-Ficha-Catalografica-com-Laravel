@@ -174,7 +174,7 @@ class apresentacao extends Controller
         $sobrenome2 = $data["sobrenome2"]; // caso o trabalho possua mais de um autor
         $nome3 = $data["nome2"]; // que irá aparecer caso tenha mais de um autor na impressão da ficha sem o ";"
         $titulo = $data["titulo"];
-        $subtitulo = ': ' . $data["subtitulo"];
+        $subtitulo = !empty($data["subtitulo"]) ? ': ' . $data["subtitulo"] : '';
         $local = $data["local"];
         $ano = $data["ano"];
         $pagina = $data["pagina"];
@@ -235,8 +235,8 @@ class apresentacao extends Controller
 
 
         // Criando o texto para o PDF
-        $texto = "$resultadoFinal&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$sobrenome, $nome. <br/> 
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$titulo $subtitulo. /$nome $sobrenome$nome2 $sobrenome2. - Belo Horizonte: ESP-MG, $ano.<br/>
+        $texto = "$resultadoFinal&nbsp;&nbsp;&nbsp;&nbsp;$sobrenome, $nome. <br/> 
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$titulo$subtitulo. /$nome $sobrenome$nome2 $sobrenome2. - Belo Horizonte: ESP-MG, $ano.<br/>
         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$pagina f. <br/>
         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$tipo (Especialização) em $titulacao.<br/>
         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Orientador(a):&nbsp;$nomeorientador $sobrenomeorientador.<br/>
