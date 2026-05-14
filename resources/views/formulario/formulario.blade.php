@@ -34,7 +34,7 @@
             } else {
                 nome2Field.style.display = "none";
                 sobrenome2Field.style.display = "none";
-                button.innerText = "Adicionar outro autor";
+                button.innerText = "Adicionar outro autor (no caso de TCC em dupla)";
                 button.classList.replace('btn-danger', 'btn-outline-secondary');
             }
         }
@@ -127,18 +127,19 @@
             </div>
 
             <div class="form-group col-md-12">
-                <label for="titulacao">Curso</label>
+                <label for="titulacao"> Nome do curso de Especialização</label>
                 <select class="form-control" id="titulacao" name="titulacao">
-                    <option value="Saúde Pública">Saúde Pública</option>
-                    <option value="Saúde Pública - Saúde no Sistema Prisional">Saúde Pública - Saúde no Sistema Prisional</option>
-                    <option value="Direito Sanitário">Direito Sanitário</option>
-                    <option value="Políticas de Saúde Mental e Atenção Psicossocial">Políticas de Saúde Mental e Atenção Psicossocial</option>
-                    <option value="Gestão do SUS">Gestão do SUS</option>
-                    <option value="Vigilância em Saúde">Vigilância em Saúde</option>
-                    <option value="Comunicação em Saúde">Comunicação em Saúde</option>
                     <option value="Atenção a Usuários de Drogas no SUS">Atenção a Usuários de Drogas no SUS</option>
+                    <option value="Comunicação em Saúde">Comunicação em Saúde</option>
+                    <option value="Direito Sanitário">Direito Sanitário</option>
+                    <option value="Gestão do SUS">Gestão do SUS</option>
                     <option value="Gestão do Trabalho e Educação em Saúde">Gestão do Trabalho e Educação em Saúde</option>
                     <option value="Gestão Hospitalar">Gestão Hospitalar</option>
+                    <option value="Políticas de Saúde Mental e Atenção Psicossocial">Políticas de Saúde Mental e Atenção Psicossocial</option>
+                    <option value="Saúde Pública">Saúde Pública</option>
+                    <option value="Saúde Pública - Saúde no Sistema Prisional">Saúde Pública - Saúde no Sistema Prisional</option>
+                    <option value="Vigilância em Saúde">Vigilância em Saúde</option>
+  
                 </select>
             </div>
 
