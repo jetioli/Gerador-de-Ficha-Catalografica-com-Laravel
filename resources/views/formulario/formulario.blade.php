@@ -34,7 +34,7 @@
             } else {
                 nome2Field.style.display = "none";
                 sobrenome2Field.style.display = "none";
-                button.innerText = "Adicionar outro autor";
+                button.innerText = "Adicionar outro autor (no caso de TCC em dupla)";
                 button.classList.replace('btn-danger', 'btn-outline-secondary');
             }
         }
