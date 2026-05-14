@@ -127,7 +127,7 @@
             </div>
 
             <div class="form-group col-md-12">
-                <label for="titulacao">Curso</label>
+                <label for="titulacao"> Nome do curso de Especialização</label>
                 <select class="form-control" id="titulacao" name="titulacao">
                     <option value="Atenção a Usuários de Drogas no SUS">Atenção a Usuários de Drogas no SUS</option>
                     <option value="Comunicação em Saúde">Comunicação em Saúde</option>
