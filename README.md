@@ -64,3 +64,163 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+# Gerador Automático de Ficha Catalográfica para a ESP-MG
+
+Sistema web desenvolvido para automatizar a geração de fichas catalográficas em formato PDF para a Escola de Saúde Pública do Estado de Minas Gerais (ESP-MG).
+
+O projeto foi inicialmente desenvolvido como Trabalho de Conclusão de Curso (TCC) e possui como objetivo otimizar o processo de geração de fichas catalográficas realizadas pela biblioteca institucional.
+
+---
+
+# Objetivo
+
+O sistema foi desenvolvido para reduzir a morosidade do processo de geração de fichas catalográficas da biblioteca da Escola de Saúde Pública do Estado de Minas Gerais (ESP-MG).
+
+A solução proposta automatiza este fluxo por meio de uma aplicação web capaz de:
+
+* coletar os dados bibliográficos dos alunos;
+* gerar automaticamente o código de catalogação;
+* produzir fichas catalográficas em formato PDF;
+* padronizar o documento conforme a norma AACR2.
+
+---
+
+# Demonstração Visual
+
+## Diagrama de Caso de Uso
+
+O diagrama abaixo representa o fluxo principal de interação do aluno com o sistema para geração automática da ficha catalográfica.
+
+![Diagrama de Caso de Uso](docs/images/caso-de-uso.png)
+
+---
+
+## Diagrama de Sequência
+
+O diagrama abaixo representa o fluxo sequencial de interação entre o aluno, o sistema, o formulário principal e o formulário auxiliar durante o processo de geração da ficha catalográfica.
+
+![Diagrama de Sequência](docs/images/diagrama-sequencia.png)
+
+---
+
+## Estrutura da Arquitetura MVC
+
+O projeto foi desenvolvido utilizando a arquitetura MVC (Model-View-Controller), adotada pelo framework Laravel.
+
+A imagem abaixo demonstra a organização das principais camadas da aplicação dentro da IDE Visual Studio Code.
+
+![Arquitetura MVC](docs/images/arquitetura-mvc.png)
+
+---
+
+## Formulário Principal
+
+O formulário principal é responsável pela coleta das informações bibliográficas necessárias para geração da ficha catalográfica.
+
+A interface foi desenvolvida utilizando HTML e Bootstrap, permitindo padronização visual e facilidade de uso.
+
+![Formulário Principal](docs/images/formulario-principal.png)
+
+---
+
+## Exemplo de Ficha Catalográfica Gerada
+
+Após o preenchimento dos dados bibliográficos, o sistema gera automaticamente a ficha catalográfica em formato PDF.
+
+A estrutura do documento segue o padrão AACR2 (Anglo-American Cataloguing Rules), garantindo padronização e evitando desconfigurações no documento final.
+
+![Ficha Catalográfica Gerada](docs/images/ficha-catalografica-pdf.png)
+
+---
+
+# Principais Funcionalidades
+
+* Formulário principal para coleta de dados bibliográficos
+* Formulário auxiliar para geração automática do código de sobrenome
+* Integração com banco de dados MySQL
+* Geração automática de ficha catalográfica em PDF
+* Padronização conforme norma AACR2
+* Interface web responsiva
+* Deploy via Docker
+* Controle de versão com GitHub
+
+---
+
+# Arquitetura da Solução
+
+O sistema foi desenvolvido utilizando a arquitetura MVC (Model-View-Controller).
+
+## Tecnologias Utilizadas
+
+### Backend
+
+* PHP 8
+* Laravel
+
+### Frontend
+
+* HTML
+* Bootstrap
+
+### Banco de Dados
+
+* MySQL
+
+### DevOps
+
+* Docker
+* GitHub
+* Docker Hub
+
+---
+
+# Instalação
+
+```bash
+git clone https://github.com/jetioli/Gerador-de-Ficha-Catalografica-com-Laravel.git
+cd Gerador-de-Ficha-Catalografica-com-Laravel
+```
+
+```bash
+docker compose up --build
+```
+
+---
+
+# GitHub
+
+Código-fonte disponível em:
+
+```text
+https://github.com/jetioli/Gerador-de-Ficha-Catalografica-com-Laravel
+```
+
+---
+
+# Docker Hub
+
+Imagem Docker disponível em:
+
+```text
+https://hub.docker.com/r/jetioli/gerador-ficha
+```
+
+A publicação da imagem no Docker Hub permite:
+
+* facilidade de deploy;
+* padronização do ambiente;
+* execução simplificada;
+* reprodutibilidade da aplicação em diferentes ambientes.
+
+---
+
+```text
+https://github.com/jetioli/Gerador-de-Ficha-Catalografica-com-Laravel
+```
+
+---
+
+# Autor
+
+Jefferson Timóteo Oliveira
