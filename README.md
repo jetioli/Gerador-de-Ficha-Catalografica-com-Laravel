@@ -137,7 +137,7 @@ A estrutura do documento segue o padrão AACR2 (Anglo-American Cataloguing Rules
 # Principais Funcionalidades
 
 * Formulário principal para coleta de dados bibliográficos
-* Formulário auxiliar para geração automática do código de sobrenome
+* Geração de código Cutter para sobrenome do autor
 * Integração com banco de dados MySQL
 * Geração automática de ficha catalográfica em PDF
 * Padronização conforme norma AACR2
